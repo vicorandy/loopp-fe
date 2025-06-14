@@ -224,6 +224,7 @@ const GetHiredForm: React.FC = () => {
               </button>
             </div>
           </form>
+          
         </div>
       </div>
     </div>

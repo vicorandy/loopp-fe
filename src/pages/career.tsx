@@ -1,58 +1,122 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
+import Navbar from '@/components/navbar';
+import Footer from '@/components/footer';
+interface FormData {
+  fullName: string;
+  email: string;
+  phoneNumber: string;
+  openToRemoteWork: string;
+  workType: string;
+}
+
+interface FormErrors {
+  fullName?: string;
+  email?: string;
+  yearsOfExperience?: string;
+}
 
 const LooppLandingPage: React.FC = () => {
-  const [formData, setFormData] = useState({
-    firstName: '',
+  const [formData, setFormData] = useState<FormData>({
+    fullName: '',
     email: '',
-    company: '',
-    jobTitle: '',
     phoneNumber: '',
-    country: '',
-    howDidYouHear: ''
+    openToRemoteWork: 'Yes',
+    workType: '',
   });
+
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const validateForm = (): boolean => {
+    const newErrors: FormErrors = {};
+
+    if (!formData.fullName.trim()) {
+      newErrors.fullName = 'Full name is required';
+    }
+
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = 'Please enter a valid email address';
+    }
+
+    if (!formData.workType) {
+      newErrors.yearsOfExperience = 'Years of experience is required';
+    } 
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
+
+    // Clear error when user starts typing
+    if (errors[name as keyof FormErrors]) {
+      setErrors(prev => ({
+        ...prev,
+        [name]: undefined,
+      }));
+    }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    // Handle form submission logic here
+    
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsSubmitting(true);
+    
+    try {
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      console.log('Form submitted:', formData);
+      alert('Form submitted successfully!');
+      
+      // Reset form
+      setFormData({
+        fullName: '',
+        email: '',
+        phoneNumber: '',
+        openToRemoteWork: 'Yes',
+        workType: '',
+      });
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      alert('Error submitting form. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Header */}
-      <header className="flex justify-between items-center px-6 py-4">
-        <div className="text-red-500 font-bold text-xl">LOOPP</div>
-        <nav className="hidden md:flex space-x-8">
-          <a href="#" className="text-gray-700 hover:text-gray-900">Home</a>
-          <a href="#" className="text-gray-700 hover:text-gray-900">About</a>
-          <a href="#" className="text-gray-700 hover:text-gray-900">Services</a>
-          <a href="#" className="text-gray-700 hover:text-gray-900">Contact</a>
-        </nav>
-      </header>
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none">
-	<path  d="M615.2,96.7C240.2,97.8,0,18.9,0,0v100h1000V0C1000,19.2,989.8,96,615.2,96.7z"></path>
-</svg>
+     <Navbar />
 
       {/* Hero Section */}
-      <section className="text-center py-20 px-6">
+      <section className="text-center py-20 px-6 mt-[7rem]">
+        
+
+      <div className=" text-black font-bold bg-[pink] p-2 my-4 px-8 w-[fit-content] mx-auto rounded-4xl">
+          Career
+      </div>
+
         <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
           Discover your place at Loopp
         </h1>
         <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
           Merge AI creativity with profitable and fulfilling career path.
         </p>
-        <button className="bg-black text-white px-8 py-3 rounded-full text-lg font-medium hover:bg-gray-800 transition-colors">
-          View more
-        </button>
+        <a href='#contact-form'><button className="bg-black text-white px-8 py-3 rounded-full text-lg font-medium hover:bg-gray-800 transition-colors">
+          Apply Now
+        </button></a>
       </section>
 
       {/* Features Section */}
@@ -65,12 +129,10 @@ const LooppLandingPage: React.FC = () => {
           <div className="grid md:grid-cols-3 gap-8">
             {/* Feature 1 */}
             <div className="rounded-lg overflow-hidden">
-              <div className="h-64 bg-gradient-to-br from-yellow-100 to-orange-100 flex items-center justify-center">
-                <div className="w-32 h-24 bg-yellow-400 rounded-lg flex items-center justify-center">
-                  <div className="w-16 h-16 bg-white rounded"></div>
-                </div>
-              </div>
-              <div className="p-6">
+            <div className="h-64 bg-gradient-to-br from-yellow-100 to-orange-100 overflow-hidden">
+              <img src="/career1.webp" className="w-full h-full object-cover" />
+            </div>
+              <div className="py-3">
                 <h3 className="text-xl font-bold text-white mb-3">
                   Work Where You Thrive
                 </h3>
@@ -86,16 +148,9 @@ const LooppLandingPage: React.FC = () => {
             {/* Feature 2 */}
             <div className="rounded-lg overflow-hidden">
               <div className="h-64 bg-gradient-to-br from-pink-400 to-purple-500 flex items-center justify-center">
-                <div className="w-40 h-24 bg-white rounded-lg shadow-lg flex items-center justify-center">
-                  <div className="grid grid-cols-2 gap-2">
-                    <div className="w-8 h-8 bg-blue-400 rounded-full"></div>
-                    <div className="w-8 h-8 bg-green-400 rounded-full"></div>
-                    <div className="w-8 h-8 bg-yellow-400 rounded-full"></div>
-                    <div className="w-8 h-8 bg-red-400 rounded-full"></div>
-                  </div>
-                </div>
+                 <img src="/career2.webp" className="w-full h-full object-cover" />
               </div>
-              <div className="p-6">
+              <div className="py-3">
                 <h3 className="text-xl font-bold text-white mb-3">
                   Your Office, Redefined
                 </h3>
@@ -111,11 +166,9 @@ const LooppLandingPage: React.FC = () => {
             {/* Feature 3 */}
             <div className="rounded-lg overflow-hidden">
               <div className="h-64 bg-gradient-to-br from-blue-400 to-cyan-300 flex items-center justify-center">
-                <div className="w-32 h-32 bg-white rounded-full flex items-center justify-center shadow-lg">
-                  <div className="w-16 h-16 bg-blue-500 rounded-full"></div>
-                </div>
+                 <img src="/career3.webp" className="w-full h-full object-cover" />
               </div>
-              <div className="p-6">
+              <div className="py-3">
                 <h3 className="text-xl font-bold text-white mb-3">
                   Live Fully, Work Freely
                 </h3>
@@ -133,164 +186,136 @@ const LooppLandingPage: React.FC = () => {
 
       {/* Contact Form Section */}
       <section id="contact-form" className="py-20 px-6 bg-gray-50">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+        <div className="mx-auto">
+          <div className="grid md:grid-cols-2 gap-12 items-center shadow-[0_0_20px_0_rgba(0,0,0,0.25)] mx-auto py-5 px-5 rounded-3xl">
             {/* Form */}
             <div>
               <h2 className="text-3xl font-bold text-gray-900 mb-2">Join Us</h2>
               <p className="text-gray-600 mb-8">Shape the future of AI</p>
               
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      First Name *
-                    </label>
-                    <input
-                      type="text"
-                      name="firstName"
-                      value={formData.firstName}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Email *
-                    </label>
-                    <input
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      required
-                    />
-                  </div>
-                </div>
+              <form onSubmit={handleSubmit} className="space-y-4">
+            {/* Full Name */}
+            <div>
+              <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1">
+                FULL NAME <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                id="fullName"
+                name="fullName"
+                value={formData.fullName}
+                onChange={handleInputChange}
+                placeholder="John Doe"
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all ${
+                  errors.fullName ? 'border-red-500' : 'border-gray-300'
+                }`}
+              />
+              {errors.fullName && (
+                <p className="text-red-500 text-sm mt-1">{errors.fullName}</p>
+              )}
+            </div>
 
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Company
-                    </label>
-                    <input
-                      type="text"
-                      name="company"
-                      value={formData.company}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Job Title
-                    </label>
-                    <input
-                      type="text"
-                      name="jobTitle"
-                      value={formData.jobTitle}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    />
-                  </div>
-                </div>
+            {/* Email and Phone Row */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                  EMAIL <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  placeholder="e.g., johndoe@example.com"
+                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all ${
+                    errors.email ? 'border-red-500' : 'border-gray-300'
+                  }`}
+                />
+                {errors.email && (
+                  <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+                )}
+              </div>
 
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Phone Number
-                    </label>
-                    <input
-                      type="tel"
-                      name="phoneNumber"
-                      value={formData.phoneNumber}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Country
-                    </label>
-                    <select
-                      name="country"
-                      value={formData.country}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    >
-                      <option value="">Select Country</option>
-                      <option value="us">United States</option>
-                      <option value="uk">United Kingdom</option>
-                      <option value="ca">Canada</option>
-                      <option value="au">Australia</option>
-                      <option value="de">Germany</option>
-                      <option value="fr">France</option>
-                      <option value="other">Other</option>
-                    </select>
-                  </div>
-                </div>
+              <div>
+                <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700 mb-1">
+                  PHONE NUMBER (OPTIONAL)
+                </label>
+                <input
+                  type="tel"
+                  id="phoneNumber"
+                  name="phoneNumber"
+                  value={formData.phoneNumber}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all"
+                />
+              </div>
+            </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    How did you hear about us?
-                  </label>
-                  <select
-                    name="howDidYouHear"
-                    value={formData.howDidYouHear}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  >
-                    <option value="">Please select</option>
-                    <option value="social-media">Social Media</option>
-                    <option value="search-engine">Search Engine</option>
-                    <option value="referral">Referral</option>
-                    <option value="advertisement">Advertisement</option>
-                    <option value="other">Other</option>
-                  </select>
-                </div>
-
-                <button
-                  type="submit"
-                  className="w-full bg-black text-white py-3 px-6 rounded-lg font-medium hover:bg-gray-800 transition-colors"
+            {/* Remote Work and Experience Row */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label htmlFor="openToRemoteWork" className="block text-sm font-medium text-gray-700 mb-1">
+                  OPEN TO REMOTE WORK?
+                </label>
+                <select
+                  id="openToRemoteWork"
+                  name="openToRemoteWork"
+                  value={formData.openToRemoteWork}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all bg-white"
                 >
-                  Submit
-                </button>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                  <option value="Hybrid">Hybrid</option>
+                </select>
+              </div>
+              
+              <div>
+                <label htmlFor="preferedWorkType" className="block text-sm font-medium text-gray-700 mb-1">
+                  PREFERED WORK TYPE?
+                </label>
+                <select
+                  id="workType"
+                  name="workType"
+                  value={formData.workType}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all bg-white"
+                >
+                  <option value="Yes">freelance</option>
+                  <option value="No">full time</option>
+                  <option value="Hybrid">both</option>
+                </select>
+              </div>
+
+            
+            </div>
+
+            {/* Submit Button */}
+            <div className="pt-4 flex justify-end">
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="bg-black text-white font-medium py-3 px-8 rounded-lg hover:bg-gray-800 focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed w-fit"
+              >
+                {isSubmitting ? 'SUBMITTING...' : 'NEXT'}
+              </button>
+            </div>
               </form>
+
             </div>
 
             {/* Image */}
             <div className="relative">
-              <div className="bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg h-96 flex items-center justify-center">
-                <div className="w-64 h-64 bg-white rounded-full shadow-lg flex items-center justify-center">
-                  <div className="w-32 h-32 bg-blue-500 rounded-full flex items-center justify-center">
-                    <div className="w-16 h-16 bg-white rounded-full"></div>
-                  </div>
-                </div>
-                {/* Simulated people in background */}
-                <div className="absolute top-8 right-8 w-12 h-12 bg-gray-400 rounded-full opacity-50"></div>
-                <div className="absolute bottom-12 left-8 w-10 h-10 bg-gray-500 rounded-full opacity-40"></div>
+              <div className="bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg h-150 rounded-3xl flex items-center justify-center">
+                  <img src="/career4.webp" className='h-full w-full object-cover rounded-3xl' alt="" />
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12 px-6">
-        <div className="max-w-7xl mx-auto text-center">
-          <div className="text-red-500 font-bold text-2xl mb-4">LOOPP</div>
-          <p className="text-gray-400 mb-6">
-            Merge AI creativity with profitable and fulfilling career path.
-          </p>
-          <div className="flex justify-center space-x-6">
-            <a href="#" className="text-gray-400 hover:text-white">Privacy Policy</a>
-            <a href="#" className="text-gray-400 hover:text-white">Terms of Service</a>
-            <a href="#" className="text-gray-400 hover:text-white">Contact</a>
-          </div>
-        </div>
-      </footer>
+    <Footer />
     </div>
   );
 };

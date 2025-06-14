@@ -53,11 +53,12 @@ const Navbar = () => {
 
             <div className="flex items-baseline space-x-8">
               {/* Top Services Dropdown */}
-              <div className="relative">
-                <button
-                  onClick={() => setIsTopServicesOpen(!isTopServicesOpen)}
-                  className="flex items-center text-black hover:text-gray-700 px-3 py-3 text-sm font-bold transition-colors duration-200"
-                >
+              <div 
+                className="relative group"
+                onMouseEnter={() => setIsTopServicesOpen(true)}
+                onMouseLeave={() => setIsTopServicesOpen(false)}
+              >
+                <button className="flex items-center text-black hover:text-gray-700 px-3 py-3 text-sm font-bold transition-colors duration-200">
                   Top Services
                   <ChevronDown 
                     className={`ml-1 h-4 w-4 transition-transform duration-200 ${
@@ -65,32 +66,35 @@ const Navbar = () => {
                     }`} 
                   />
                 </button>
-                {isTopServicesOpen && (
-                  <div className="absolute top-full left-0 mt-1 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50">
-                    <div className="py-1">
-                      <a href="/services/web-development" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
-                        Web Development
-                      </a>
-                      <a href="/services/mobile-apps" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
-                        Mobile Apps
-                      </a>
-                      <a href="/services/ai-solutions" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
-                        AI Solutions
-                      </a>
-                      <a href="/services/consulting" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
-                        Consulting
-                      </a>
-                    </div>
+                <div className={`absolute top-full left-0 mt-1 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50 transition-all duration-200 ${
+                  isTopServicesOpen 
+                    ? 'opacity-100 visible transform translate-y-0' 
+                    : 'opacity-0 invisible transform -translate-y-2'
+                }`}>
+                  <div className="py-1">
+                    <a href="/services/web-development" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-150">
+                      Web Development
+                    </a>
+                    <a href="/services/mobile-apps" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-150">
+                      Mobile Apps
+                    </a>
+                    <a href="/services/ai-solutions" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-150">
+                      AI Solutions
+                    </a>
+                    <a href="/services/consulting" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-150">
+                      Consulting
+                    </a>
                   </div>
-                )}
+                </div>
               </div>
 
               {/* Explore Dropdown */}
-              <div className="relative">
-                <button
-                  onClick={() => setIsExploreOpen(!isExploreOpen)}
-                  className="flex items-center text-black hover:text-gray-700 px-3 py-3 text-sm font-bold transition-colors duration-200"
-                >
+              <div 
+                className="relative group"
+                onMouseEnter={() => setIsExploreOpen(true)}
+                onMouseLeave={() => setIsExploreOpen(false)}
+              >
+                <button className="flex items-center text-black hover:text-gray-700 px-3 py-3 text-sm font-bold transition-colors duration-200">
                   Explore
                   <ChevronDown 
                     className={`ml-1 h-4 w-4 transition-transform duration-200 ${
@@ -98,21 +102,23 @@ const Navbar = () => {
                     }`} 
                   />
                 </button>
-                {isExploreOpen && (
-                  <div className="absolute top-full left-0 mt-1 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50">
-                    <div className="py-1">
-                      <a href="/about" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
-                        About
-                      </a>
-                      <a href="/career" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
-                        Carrer
-                      </a>
-                      <a href="/explore/resources" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
-                        Resources
-                      </a>
-                    </div>
+                <div className={`absolute top-full left-0 mt-1 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50 transition-all duration-200 ${
+                  isExploreOpen 
+                    ? 'opacity-100 visible transform translate-y-0' 
+                    : 'opacity-0 invisible transform -translate-y-2'
+                }`}>
+                  <div className="py-1">
+                    <a href="/about" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-150">
+                      About
+                    </a>
+                    <a href="/career" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-150">
+                      Career
+                    </a>
+                    <a href="/explore/resources" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-150">
+                      Resources
+                    </a>
                   </div>
-                )}
+                </div>
               </div>
 
               {/* Become a Partner */}

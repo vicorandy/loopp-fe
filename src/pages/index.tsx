@@ -57,7 +57,7 @@ export default function Home() {
       </div>
     </div>
           </div>
-          <div  >
+          <div id="services" >
             <ServiceGrid />
           </div>
           <Footer />
