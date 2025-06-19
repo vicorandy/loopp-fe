@@ -307,7 +307,7 @@ const LooppLandingPage: React.FC = () => {
 
             {/* Image */}
             <div className="relative">
-              <div className="bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg h-150 rounded-3xl flex items-center justify-center">
+              <div className="bg-gradient-to-br from-gray-100 to-gray-200  h-150 rounded-3xl flex items-center justify-center">
                   <img src="/career4.webp" className='h-full w-full object-cover rounded-3xl' alt="" />
               </div>
             </div>
