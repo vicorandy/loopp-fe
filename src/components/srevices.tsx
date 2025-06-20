@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronLeft, ChevronRight, CheckCircle } from 'lucide-react';
+import { ChevronLeft, ChevronRight, CheckCircle, Crown} from 'lucide-react';
 
 const ServiceGrid = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -125,7 +125,7 @@ const ServiceGrid = () => {
   return (
     <div >
       {/* Categories Header */}
-      <div className="max-w-[1450px] mx-auto bg-white  sticky top-20 z-40">
+      <div className="max-w-[1350px] mx-auto bg-white  sticky top-20 z-40">
         <div className="relative  mx-auto px-4 sm:px-6 lg:px-8">
           {/* Left scroll button */}
           <button
@@ -139,7 +139,7 @@ const ServiceGrid = () => {
           {/* Categories container */}
           <div
             id="categories-container"
-            className="flex items-center gap-2 py-4 overflow-x-auto scrollbar-hide mx-12"
+            className="flex items-center gap-2 py-4 overflow-x-auto scrollbar-hide mx-4"
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
             {categories.map((category) => (
@@ -172,7 +172,7 @@ const ServiceGrid = () => {
       <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filteredServices.map((service) => (
-            <div key={service.id} className="bg-white rounded-xl overflow-hidden  hover:shadow-xl transition-shadow duration-300 cursor-pointer">
+            <div key={service.id} className="bg-white overflow-hidden transition-shadow duration-300 cursor-pointer">
               {/* Card Image with Overlay */}
               <div className="relative h-68 bg-gradient-to-br from-teal-600 to-teal-800 overflow-hidden">
                 {/* Background Pattern/Overlay */}
@@ -186,8 +186,8 @@ const ServiceGrid = () => {
                 </div>
 
                 {/* Overlay Elements */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                    <img className='h-68' src={service?.image} />
+                <div className="absolute bg-white inset-0 flex items-center justify-center">
+                    <img className='h-68 rounded-2xl ' src={service?.image} />
                 </div>
               </div>
 
@@ -197,21 +197,22 @@ const ServiceGrid = () => {
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-2">
                     {service.verified && (
-                      <div className="flex items-center gap-1">
-                        <CheckCircle className="w-4 h-4 text-red-500" />
-                        <span className="text-xs font-medium text-red-500">VETTED AI ENGINEERS</span>
-                      </div>
+                       <div className="flex items-center gap-1 bg-[#FFE1E1] text-black px-3 py-1 rounded-full text-xs font-medium">
+                         <CheckCircle className="w-3 h-3" />
+                         VETTED ENGINEERS
+                         </div>
                     )}
                   </div>
                   {service.pro && (
-                    <span className="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs font-medium">
-                      PRO ⭐
-                    </span>
+                     <div className="flex items-center gap-1 bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs font-medium">
+                        <Crown className="w-3 h-3" />
+                        PRO
+                        </div>
                   )}
                 </div>
 
                 {/* Service Title */}
-                <h3 className="text-lg font-bold text-gray-900 leading-tight">
+                <h3 className="text-lg font-[400] text-black  text-[20px] leading-tight">
                   {service.title}
                 </h3>
               </div>

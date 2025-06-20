@@ -6,13 +6,13 @@ import { Home, BarChart3, Users, FileText, PieChart, Settings ,  } from 'lucide-
 
 interface SidebarProps { open: boolean; onClose: () => void; }
 const items = [
-  { path: '/dashboard', label: 'Dashboard', icon: <Home className="w-5 h-5" /> },
-  { path: '/dashboard/services', label: 'Services', icon: <Settings className="w-5 h-5" /> },
-  { path: '/dashboard/ai-engineer', label: 'Ai Engineers', icon: <BarChart3 className="w-5 h-5" /> },
-  { path: '/dashboard/projects', label: 'Projects', icon: <Users className="w-5 h-5" /> },
-  { path: '/dashboard/reports', label: 'Reports', icon: <FileText className="w-5 h-5" /> },
-  { path: '/dashboard/statistics', label: 'Statistics', icon: <PieChart className="w-5 h-5" /> },
-  { path: '/dashboard/settings', label: 'Settings', icon: <Settings className="w-5 h-5" /> }
+  { path: '/dashboard/project-manager', label: 'Dashboard', icon: <Home className="w-5 h-5" /> },
+  { path: '/dashboard/project-manager/services', label: 'Services', icon: <Settings className="w-5 h-5" /> },
+  { path: '/dashboard/project-manager/ai-engineer', label: 'Ai Engineers', icon: <BarChart3 className="w-5 h-5" /> },
+  { path: '/dashboard/project-manager/projects', label: 'Projects', icon: <Users className="w-5 h-5" /> },
+  { path: '/dashboard/project-manager/chat', label: 'Chats', icon: <FileText className="w-5 h-5" /> },
+  { path: '/dashboard/project-manager/statistics', label: 'Statistics', icon: <PieChart className="w-5 h-5" /> },
+  { path: '/dashboard/project-manager/settings', label: 'Settings', icon: <Settings className="w-5 h-5" /> }
 ];
 
 const Sidebar: React.FC<SidebarProps> = ({ open, onClose }) => {

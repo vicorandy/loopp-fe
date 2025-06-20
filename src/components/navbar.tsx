@@ -24,7 +24,7 @@ const Navbar = () => {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white ">
-      <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <div className="flex-shrink-0">
@@ -43,7 +43,7 @@ const Navbar = () => {
                 <input
                   type="text"
                   placeholder="Search..."
-                  className="w-full pl-4 pr-10 py-2 bg-gray-50 border border-gray-200 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
+                  className="w-full pl-4 pr-10 py-2 bg-gray-50 border border-gray-200 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-[transparent] focus:border-transparent"
                 />
                 <button className="absolute right-2 top-1/2 transform -translate-y-1/2 p-1.5 bg-black text-white rounded-full hover:bg-gray-800 transition-colors">
                   <Search className="w-4 h-4" />
@@ -51,7 +51,7 @@ const Navbar = () => {
               </div>
             </div>
 
-            <div className="flex items-baseline space-x-8">
+            <div className="flex items-baseline space-x-[-1px]">
               {/* Top Services Dropdown */}
               <div 
                 className="relative group"

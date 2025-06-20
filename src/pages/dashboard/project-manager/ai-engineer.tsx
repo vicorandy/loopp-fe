@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Plus, Edit, Trash2, UserPlus, X, Check } from 'lucide-react';
-import DashboardLayout from '@/components/dashboard/layout';
+import DashboardLayout from '@/components/dashboard/project-manager/layout';
 
 export interface Project {
   id: string;

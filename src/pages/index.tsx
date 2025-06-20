@@ -27,11 +27,11 @@ export default function Home() {
   };
 
   return (
-    <div className="max-w-[1500px] mx-auto ">
+    <div className="max-w-[1400px] mx-auto ">
           <Navbar/>
           <div className="justify-center mt-[10rem] ">
-               <div className=" text-black font-bold bg-[pink] p-2 px-8 w-[fit-content] mx-auto rounded-4xl">AI is rewriting the rules—Be Part of It!</div>
-          <h1 className="text-center text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[4rem] py-5 pb-8 leading-tight ">
+               <div className=" text-black font-bold bg-[#FFE1E1] p-2 px-8 w-[fit-content] mx-auto rounded-4xl">AI is rewriting the rules—Be Part of It!</div>
+          <h1 className="text-center text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-[60px] font-[500] tracking-[-3px] text-[black]  py-5 pb-8 leading-tight ">
           Find the Perfect AI Engineer <br />
           For Your Next Project
         </h1>
@@ -43,7 +43,7 @@ export default function Home() {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="What do you need to find?"
-          className="flex-1 px-6 py-3 text-gray-700 bg-white border border-gray-200 rounded-full shadow-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent placeholder-gray-400 text-base"
+          className="flex-1 px-6 py-3 text-gray-700 bg-white border border-gray-200 rounded-full shadow-lg focus:outline-none focus:ring-2 focus:ring-[transparent] focus:border-transparent placeholder-gray-400 text-base"
           onKeyDown={(e) => e.key === 'Enter' && handleSearch(e)}
           // onFocus={}
         />
