@@ -1,7 +1,9 @@
-import axios from 'axios'
+import axios,{AxiosError} from 'axios'
 import { SignUpData,LoginData } from '../types';
+import { getUsersToken } from '../utils';
 
-const API_BASE_URL = 'http://localhost:5000/api/v1';
+
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ;
 
 
 // Sign Up Function
@@ -29,3 +31,22 @@ export async function login(data: LoginData) {
     throw new Error('An unexpected error occurred during login.');
   }
 }
+
+//get user
+export async function getUser() {
+    try {
+      const accessToken = getUsersToken();
+      console.log('running')
+      console.log({accessToken})
+      if (!accessToken) return;
+      const response = await axios.get(`${API_BASE_URL}/users/get-user-info`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      console.log({response})
+      return response.data;
+    } catch (error) {
+      throw error as AxiosError;
+    }
+  }
