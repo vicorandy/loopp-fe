@@ -12,6 +12,7 @@ export async function signUp(data: SignUpData){
     const response = await axios.post(`${API_BASE_URL}/users/sign-up`, data);
     return response.data;
   } catch (error: any) {
+    console.log({error})
     if (axios.isAxiosError(error) && error.response) {
       throw new Error(error.response.data.message || 'Sign up failed.');
     }

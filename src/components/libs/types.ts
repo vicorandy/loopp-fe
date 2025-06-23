@@ -13,5 +13,17 @@ export interface SignUpData {
     password: string;
   }
   
+export interface GetServicesParams {
+  page: number;
+  limit: number;
+}
 
-  
+
+export interface AddServicePayload {
+  name: string;
+  category: string;
+  description: string;
+  verified: boolean;
+  pro: boolean;
+  file: File;
+}

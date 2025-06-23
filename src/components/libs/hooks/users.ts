@@ -2,7 +2,6 @@ import { useMutation, useQuery,useQueryClient } from '@tanstack/react-query';
 import { signUp, login, getUser } from '../services/users';
 import { useRouter } from 'next/router';
 import Cookies from 'js-cookie';
-import { log } from 'console';
 
 export const useSignUp = () => {
   const queryClient = useQueryClient();
