@@ -25,5 +25,53 @@ export interface AddServicePayload {
   description: string;
   verified: boolean;
   pro: boolean;
-  file: File;
+  file: File | null;
 }
+export interface EditServicePayload {
+  id: string;
+  name: string;
+  category: string;
+  description: string;
+  verified: boolean;
+  pro: boolean;
+  file: File | null;
+}
+
+export const serviceCategories = [
+    'All',
+    'AI Agents',
+    'Video & Image',
+    'Voice & Music',
+    'Technology',
+    'Cybersecurity',
+    'Healthcare',
+    'Finance & Fintech',
+    'Education & EdTech',
+    'Real Estate',
+    'Robotics and Automation',
+    'Project Management',
+    'Business',
+    'Legal and Compliance',
+    'Retail and E-Commerce',
+    'Entertainment',
+    'Aerospace',
+    'Agriculture',
+    'Manufacturing',
+    'Fashion & Beauty',
+    'Gaming & eSports',
+    'Transportation',
+    'Energy & Sustainability',
+    'Supply Chain & Logistics',
+    'Tourism & Hospitality',
+    'Food & Beverage'
+  ];
+
+  export interface Service {
+    id : string;
+    name: string;
+    category :string;
+    description: string;
+    verified: boolean;
+    pro: boolean;
+    image: string | null; // Updated to handle file preview
+  }

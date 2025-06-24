@@ -1,50 +1,43 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef,useEffect } from 'react';
 import { Plus, Edit, Trash2, Check, X } from 'lucide-react';
 import DashboardLayout from '@/components/dashboard/project-manager/layout';
+import { useAddService ,useGetServices,useEditService,useDeleteService} from '@/components/libs/hooks/services';
+import { AddServicePayload } from '@/components/libs/types';
+import { toast } from 'react-toastify';
+import { serviceCategories,Service } from '@/components/libs/types';
 
-export interface Service {
-  id: string;
-  name: string;
-  description: string;
-  verified: boolean;
-  pro: boolean;
-  image: string | null; // Updated to handle file preview
-}
+
 
 const ServicesPage = () => {
-  const [services, setServices] = useState<Service[]>([
-    {
-      id: '1',
-      name: 'Web Development',
-      description: 'Custom website development',
-      verified: true,
-      pro: false,
-      image: '/images/web-dev.jpg'
-    },
-    {
-      id: '2',
-      name: 'Mobile App',
-      description: 'iOS and Android applications',
-      verified: false,
-      pro: true,
-      image: '/images/mobile-app.jpg'
-    }
-  ]);
+  const {data,isLoading} = useGetServices({page:1,limit:12})
+
+  const [services, setServices] = useState<Service[]>([ ]);
   
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentService, setCurrentService] = useState<Service | null>(null);
-  const [formData, setFormData] = useState<Omit<Service, 'id'>>({
-    name: '',
-    description: '',
-    verified: false,
-    pro: false,
-    image: ''
-  });
+  const serviceMutation = useAddService()
+  const editserviceMutation = useEditService()
+  const deleteServiceMutation = useDeleteService()
+
+  const [formData, setFormData] = useState<AddServicePayload>({
+  name: '',
+  category: '',
+  description: '',
+  verified: false,
+  pro: false,
+  file: null,
+});
   
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+// setting services
+useEffect(()=>{
+  setServices(data?.services)
+  console.log(data)
+},[data])
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
     const checked = type === 'checkbox' ? (e.target as HTMLInputElement).checked : false;
     
@@ -55,32 +48,34 @@ const ServicesPage = () => {
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      // Create a preview URL
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result as string);
-        setFormData(prev => ({
-          ...prev,
-          image: reader.result as string
-        }));
-      };
-      reader.readAsDataURL(file);
-    } else {
-      setImagePreview(null);
-      setFormData(prev => ({ ...prev, image: '' }));
-    }
-  };
+  const file = e.target.files?.[0];
+  if (file) {
+    setFormData(prev => ({
+      ...prev,
+      file,
+    }));
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImagePreview(reader.result as string); // For image preview display
+    };
+    reader.readAsDataURL(file);
+  } else {
+    setFormData(prev => ({ ...prev, file: null }));
+    setImagePreview(null);
+  }
+};
+
 
   const openAddModal = () => {
     setCurrentService(null);
     setFormData({
-      name: '',
-      description: '',
-      verified: false,
-      pro: false,
-      image: ''
+        name: '',
+        category: '',
+        description: '',
+        verified: false,
+        pro: false,
+        file: null,
     });
     setImagePreview(null);
     setIsModalOpen(true);
@@ -90,38 +85,51 @@ const ServicesPage = () => {
     setCurrentService(service);
     setFormData({
       name: service.name,
+      category: service.category,
       description: service.description,
-      verified: service.verified,
-      pro: service.pro,
-      image: service.image || ''
+      verified: false,
+      pro: false,
+      file: null,
     });
     setImagePreview(service.image || null);
     setIsModalOpen(true);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
+  const  handleSubmit = async (e: React.FormEvent) => {
+    try{
+    e.preventDefault(); 
     if (currentService) {
+      const data = await editserviceMutation.mutateAsync({data:formData,id:currentService.id})
+      
       // Update existing service
       setServices(services.map(svc => 
-        svc.id === currentService.id ? { ...svc, ...formData } : svc
+        svc.id === currentService.id ? { ...data.service } : svc
       ));
+
+      toast.success(data.message)
     } else {
       // Add new service
-      const newService: Service = {
-        ...formData,
-        id: Date.now().toString()
-      };
-      setServices([...services, newService]);
+      const data = await  serviceMutation.mutateAsync(formData)
+      toast.success(data.message)
+
     }
-    
+   
+  }catch(error:any){
+    toast.error(error.message)
+  }finally{
     setIsModalOpen(false);
     setImagePreview(null);
+  }
   };
 
-  const deleteService = (id: string) => {
+  const deleteService = async (id: string) => {
+    try {
+    const data = await deleteServiceMutation.mutateAsync(id)
+    toast.success(data.message)
     setServices(services.filter(service => service.id !== id));
+    } catch (error:any) {
+      toast.error(error.message)
+    }
   };
 
   const triggerFileInput = () => {
@@ -130,7 +138,7 @@ const ServicesPage = () => {
 
   const removeImage = () => {
     setImagePreview(null);
-    setFormData(prev => ({ ...prev, image: '' }));
+    setFormData(prev => ({ ...prev, file : null }));
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
@@ -164,7 +172,7 @@ const ServicesPage = () => {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {services.map(service => (
+                {services?.map(service => (
                   <tr key={service.id} className="hover:bg-gray-50">
                     <td className="px-2 py-4 whitespace-nowrap">
                       {service.image ? (
@@ -256,6 +264,24 @@ const ServicesPage = () => {
                     />
                   </div>
                   
+                  <div>
+                    <label className="block text-sm font-medium mb-1">Category</label>
+                    <select
+                      name="category"
+                      value={formData.category}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                      required
+                    >
+                      <option value="" disabled>Select a category</option>
+                      {serviceCategories.map((category, index) => (
+                        <option key={index} value={category}>
+                          {category}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
                   <div>
                     <label className="block text-sm font-medium mb-1">Description</label>
                     <textarea

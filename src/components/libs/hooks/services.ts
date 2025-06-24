@@ -1,10 +1,23 @@
 import { useMutation, useQuery,useQueryClient } from '@tanstack/react-query';
-import { getServices,addService } from '../services/services';
-import { GetServicesParams,AddServicePayload } from '../types';
+import { getServices,addService,editService,deleteService } from '../services/services';
+import { GetServicesParams,AddServicePayload,EditServicePayload } from '../types';
 
 export const useAddService = () => {
   return useMutation({
     mutationFn: (data: AddServicePayload) => addService(data),
+  });
+};
+
+
+export const useEditService = () => {
+  return useMutation({
+    mutationFn: ({ data, id }: { data: AddServicePayload; id: string }) => editService({ data, id }),
+  });
+};
+
+export const useDeleteService = () => {
+  return useMutation({
+    mutationFn: (id: string ) => deleteService( id ),
   });
 };
 
