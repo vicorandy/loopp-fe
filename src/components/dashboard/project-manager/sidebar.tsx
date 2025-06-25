@@ -2,17 +2,26 @@
 import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { Home, BarChart3, Users, FileText, PieChart, Settings ,  } from 'lucide-react';
+import {
+  Home,
+  Settings,
+  LineChart,
+  MessageSquareText,
+  Users2,
+  FolderKanban,
+  Cpu,
+  BarChartBig,
+} from 'lucide-react';
 
 interface SidebarProps { open: boolean; onClose: () => void; }
-const items = [
+const navItems = [
   { path: '/dashboard/project-manager', label: 'Dashboard', icon: <Home className="w-5 h-5" /> },
   { path: '/dashboard/project-manager/services', label: 'Services', icon: <Settings className="w-5 h-5" /> },
-  { path: '/dashboard/project-manager/ai-engineer', label: 'Ai Engineers', icon: <BarChart3 className="w-5 h-5" /> },
-  { path: '/dashboard/project-manager/projects', label: 'Projects', icon: <Users className="w-5 h-5" /> },
-  { path: '/dashboard/project-manager/chat', label: 'Chats', icon: <FileText className="w-5 h-5" /> },
-  { path: '/dashboard/project-manager/statistics', label: 'Statistics', icon: <PieChart className="w-5 h-5" /> },
-  { path: '/dashboard/project-manager/settings', label: 'Settings', icon: <Settings className="w-5 h-5" /> }
+  { path: '/dashboard/project-manager/ai-engineer', label: 'AI Engineers', icon: <Cpu className="w-5 h-5" /> },
+  { path: '/dashboard/project-manager/projects', label: 'Projects', icon: <FolderKanban className="w-5 h-5" /> },
+  { path: '/dashboard/project-manager/chat', label: 'Chats', icon: <MessageSquareText className="w-5 h-5" /> },
+  { path: '/dashboard/project-manager/statistics', label: 'Statistics', icon: <BarChartBig className="w-5 h-5" /> },
+  { path: '/dashboard/project-manager/settings', label: 'Settings', icon: <Settings className="w-5 h-5" /> },
 ];
 
 const Sidebar: React.FC<SidebarProps> = ({ open, onClose }) => {
@@ -24,7 +33,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, onClose }) => {
         <button onClick={onClose} className="lg:hidden p-1 rounded-md hover:bg-gray-100">✕</button>
       </div>
       <nav className="p-4 space-y-2">
-        {items.map(item => {
+        {navItems.map(item => {
           const isActive = router.pathname === item.path;
           return (
             <Link key={item.path} href={item.path} className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors duration-200 w-full ${isActive ? 'bg-gradient-to-r from-black to-gray-800 text-white' : 'text-gray-600 hover:bg-gray-100'}`} onClick={onClose}>
