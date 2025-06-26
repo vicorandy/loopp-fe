@@ -4,7 +4,10 @@ export interface SignUpData {
     lastName: string;
     email: string;
     userRole: string;
-    projectMangerSecret: string;
+    projectMangerSecret?: string;
+    phoneNumber?: string;
+    openToRemoteWork?: string;
+    yearsOfExperience?: string;
     password: string;
   }
   
@@ -18,7 +21,6 @@ export interface GetServicesParams {
   limit: number;
 }
 
-
 export interface AddServicePayload {
   name: string;
   category: string;
@@ -27,6 +29,7 @@ export interface AddServicePayload {
   pro: boolean;
   file: File | null;
 }
+
 export interface EditServicePayload {
   id: string;
   name: string;
@@ -74,4 +77,17 @@ export const serviceCategories = [
     verified: boolean;
     pro: boolean;
     image: string | null; // Updated to handle file preview
+  }
+
+  export interface User {
+    id:string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    userRole: string;
+    projectMangerSecret: string;
+    phoneNumber: string;
+    openToRemoteWork: string;
+    yearsOfExperience: string;
+    password: string;
   }

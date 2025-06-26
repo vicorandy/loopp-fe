@@ -51,3 +51,19 @@ export async function getUser() {
       throw error as AxiosError;
     }
   }
+
+//get user
+export async function getUsersByRole(userRole:string) {
+    try {
+      const accessToken = getUsersToken();
+      if (!accessToken) return;
+      const response = await axios.get(`${API_BASE_URL}/users/get-user-by-role/${userRole}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      throw error as AxiosError;
+    }
+  }

@@ -1,5 +1,5 @@
 import { useMutation, useQuery,useQueryClient } from '@tanstack/react-query';
-import { signUp, login, getUser } from '../services/users';
+import { signUp, login, getUser,getUsersByRole } from '../services/users';
 import { useRouter } from 'next/router';
 import Cookies from 'js-cookie';
 
@@ -47,5 +47,12 @@ export const useGetUser = () => {
     return useQuery({
         queryFn:getUser,
         queryKey:['get user info'],
+    })
+  };
+
+export const useGetUserByRole = (userRole:string) => {
+    return useQuery({
+        queryFn:()=>getUsersByRole(userRole),
+        queryKey:['get user by role'],
     })
   };
