@@ -24,12 +24,12 @@ const Navbar = () => {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white ">
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto px-0 lg:px-30 ">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <div className="flex-shrink-0">
             <a href="/" className="text-2xl font-bold text-black">
-              <img src={'/logo.svg'} className='w-[100px] h-[40px]' alt="Logo" />
+              <img src={'/logo.svg'} className='w-[120px] h-[35px]' alt="Logo" />
             </a>
           </div>
 

@@ -3,12 +3,15 @@ import { User, CheckCircle, Crown } from 'lucide-react';
 import Navbar from '@/components/navbar';
 import Footer from '@/components/footer';
 import { DedicatedPMModal } from '@/components/modal/projectManagerModal';
+import { PiSparkleFill } from "react-icons/pi";
+import { PiWarningCircle } from "react-icons/pi";
+
 
 const Service = () => {
   const [projectDescription, setProjectDescription] = useState('');
   const [deadline, setDeadline] = useState('');
   const [budget, setBudget] = useState('');
-  const [modalOpen, setModalOpen] = useState(true);
+  const [modalOpen, setModalOpen] = useState(false);
 
    const services = [
     {
@@ -92,11 +95,11 @@ const Service = () => {
   };
 
   return (
-     <div className="max-w-[1400px] mx-auto">
+     <div className="container mx-auto px-0 lg:px-33">
         <Navbar />
         <DedicatedPMModal open={modalOpen} onClose={()=>{setModalOpen(false)}} />
 
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 shadow-[0_0_20px_0_rgba(0,0,0,0.10)] mt-[8rem] rounded-3xl" >
+            <div className="mx-auto px-4 sm:px-6 lg:px-6 py-6 shadow-[0_0_20px_0_rgba(0,0,0,0.10)] mt-[8rem] rounded-3xl" >
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
                     {/* Left: Image Card */}
@@ -113,27 +116,32 @@ const Service = () => {
                     {/* Right: Form */}
                     <div className="space-y-6">
                     {/* Badges: no wrap, smaller */}
-                    <div className="flex items-center gap-3 whitespace-nowrap">
-                        <div className="flex items-center gap-1 bg-black text-white px-3 py-1 rounded-full text-xs font-medium">
-                        <User className="w-3 h-3" />
-                        PROJECT MANAGER
+                    <div className="flex items-center justify-between gap-3 whitespace-nowrap">
+                        <div className='flex gap-2 items-center'> 
+                            <div className="flex items-center gap-1 bg-black text-white px-3 py-1 rounded-full text-xs font-medium">
+                            <User className="w-3 h-3" />
+                            PROJECT MANAGER
+                            </div>
+                            <PiWarningCircle className='w-5 h-5' onClick={()=>setModalOpen(true)} />
                         </div>
-                        <div className="flex items-center gap-1 bg-[#FFE1E1] text-black px-3 py-1 rounded-full text-xs font-medium">
-                                        <CheckCircle className="w-3 h-3" />
-                                        VETTED ENGINEERS
-                        </div>
-                        <div className="flex items-center gap-1 bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs font-medium">
-                                <Crown className="w-3 h-3" />
-                                PRO
-                        </div>
+                        <div className='flex gap-3'>
+                            <div className="flex items-center gap-1 bg-[#FFE1E1] text-black px-3 py-1 rounded-full text-xs font-medium">
+                                            <CheckCircle className="w-3 h-3" />
+                                            VETTED ENGINEERS
+                            </div>
+                            <div className="flex items-center font-bold border-1 gap-1 bg-[transparent] text-[black] px-3 py-1 rounded-full text-xs ">
+                                                PRO
+                                                <PiSparkleFill color='black' className="w-3 h-3" />
+                            </div>
+                         </div>
                     </div>
 
                     {/* Heading + Copy: scaled down */}
                     <div>
-                        <h1 className="text-center lg:text-left text-2xl sm:text-3xl md:text-3xl lg:text-2xl font-bold text-gray-900 leading-snug mb-2">
-                        Build AI Agents for<br/>Scalable, Intelligent Task Execution
+                        <h1 className="text-center lg:text-left text-2xl sm:text-3xl md:text-3xl lg:text-[28px] font-[600] text-black leading-snug mb-2">
+                        Build AI Agents for Scalable, Intelligent Task Execution
                         </h1>
-                        <p className="text-center lg:text-left text-gray-600 text-sm sm:text-base leading-relaxed">
+                        <p className="text-center lg:text-left text-black text-[14px] font-[400] leading-relaxed">
                         Develop an AI‑driven autonomous agent—a 24/7 digital teammate that manages workflows, makes decisions, learns from experience, and seamlessly collaborates with both humans and other agents.
                         </p>
                     </div>
@@ -200,57 +208,57 @@ const Service = () => {
                 </div>
             </div>
             
-            <div className="max-w-[1400px] mx-auto mt-[3rem]">
+            <div className="mx-auto mt-[3rem]">
                 <h1 className='text-3xl'>People also search for...</h1>
                 {/* Service Cards Grid */}
                 <div className="w-full mx-auto px-4 sm:px-6 lg:px-1 py-8">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                    {services.map((service) => (
-                        <div key={service.id} className="bg-white overflow-hidden transition-shadow duration-300 cursor-pointer">
-                                {/* Card Image with Overlay */}
-                                <div className="relative h-68 bg-gradient-to-br from-teal-600 to-teal-800 overflow-hidden">
-                                    {/* Background Pattern/Overlay */}
-                                    <div className="absolute inset-0 bg-black bg-opacity-20"></div>
-                                    
-                                    {/* Category Tag */}
-                                    <div className="absolute top-4 left-4 z-25">
-                                    <span className="bg-white bg-opacity-90 text-black px-3 py-1 rounded-full text-xs font-medium">
-                                        {service.category.toUpperCase()}
-                                    </span>
+                    {services?.map((service) => (
+                         <div key={service.id} className="bg-white overflow-hidden transition-shadow duration-300 cursor-pointer">
+                                      {/* Card Image with Overlay */}
+                                      <div className="relative h-68 bg-gradient-to-br from-teal-600 to-teal-800 overflow-hidden">
+                                        {/* Background Pattern/Overlay */}
+                                        <div className="absolute inset-0 bg-black bg-opacity-20"></div>
+                                        
+                                        {/* Category Tag */}
+                                        <div className="absolute top-4 left-4 z-25">
+                                          <span className="bg-white bg-opacity-90 text-[10px]  text-black px-3 py-1 rounded-full text-xs font-[600]">
+                                            {service.category.toUpperCase()}
+                                          </span>
+                                        </div>
+                        
+                                        {/* Overlay Elements */}
+                                        <div className="absolute bg-white inset-0 flex items-center justify-center">
+                                            <img className='h-68 rounded-2xl ' src={service?.image} />
+                                        </div>
+                                      </div>
+                        
+                                      {/* Card Content */}
+                                      <div className="py-2">
+                                        {/* Verification and Pro Badge */}
+                                        <div className="flex items-center justify-between mb-2">
+                                          <div className="flex items-center gap-2">
+                                            {service.verified && (
+                                               <div className="flex items-center gap-1 bg-[#FFE1E1] text-black px-3 py-1 rounded-full text-xs font-bold">
+                                                 <CheckCircle color='black' className="w-3 h-3" />
+                                                 VETTED ENGINEERS
+                                                 </div>
+                                            )}
+                                          </div>
+                                          {service.pro && (
+                                             <div className="flex items-center font-bold border-1 gap-1 bg-[transparent] text-[black] px-3 py-1 rounded-full text-xs ">
+                                                PRO
+                                                <PiSparkleFill color='black' className="w-3 h-3" />
+                                              </div>
+                                          )}
+                                        </div>
+                        
+                                        {/* Service Title */}
+                                        <h3 className="text-lg font-[400] text-black  text-[14px] leading-tight">
+                                          {service.title}
+                                        </h3>
+                                      </div>
                                     </div>
-                    
-                                    {/* Overlay Elements */}
-                                    <div className="absolute bg-white inset-0 flex items-center justify-center">
-                                        <img className='h-68 rounded-2xl ' src={service?.image} />
-                                    </div>
-                                </div>
-                    
-                                {/* Card Content */}
-                                <div className="py-5">
-                                    {/* Verification and Pro Badge */}
-                                    <div className="flex items-center justify-between mb-3">
-                                    <div className="flex items-center gap-2">
-                                        {service.verified && (
-                                            <div className="flex items-center gap-1 bg-[#FFE1E1] text-black px-3 py-1 rounded-full text-xs font-medium">
-                                            <CheckCircle className="w-3 h-3" />
-                                            VETTED ENGINEERS
-                                            </div>
-                                        )}
-                                    </div>
-                                    {service.pro && (
-                                        <div className="flex items-center gap-1 bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs font-medium">
-                                            <Crown className="w-3 h-3" />
-                                            PRO
-                                            </div>
-                                    )}
-                                    </div>
-                    
-                                    {/* Service Title */}
-                                    <h3 className="text-lg font-[400] text-black  text-[20px] leading-tight">
-                                    {service.title}
-                                    </h3>
-                                </div>
-                        </div>
                     ))}
                     </div>
                 </div>

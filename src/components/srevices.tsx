@@ -1,8 +1,27 @@
-import React, { useState } from 'react';
-import { ChevronLeft, ChevronRight, CheckCircle, Crown} from 'lucide-react';
+import React, { useState,useEffect } from 'react';
+import { ChevronLeft, ChevronRight, CheckCircle, Crown ,Sparkle} from 'lucide-react';
+import { PiSparkleFill } from "react-icons/pi";
+import { useGetServices } from './libs/hooks/services';
 
 const ServiceGrid = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');
+  interface ServiceData {
+  id: string;
+  name: string;
+  category: string;
+  image: string;
+  description: string;
+  verified: boolean;
+  pro: boolean;
+  // Add any additional fields you didn't include in the snippet (represented by …)
+}
+    const {data,isLoading} = useGetServices({page:1,limit:12})
+    const [services,setService] = useState<ServiceData[]>([])
+  
+    useEffect(()=>{
+       setService(data?.services)
+    },[data])
+
 
   const categories = [
     'All',
@@ -33,7 +52,7 @@ const ServiceGrid = () => {
     'Food & Beverage'
   ];
 
-  const services = [
+  const servicess = [
     {
       id: 1,
       title: "Develop AI for Sustainable Supply Chain Optimization",
@@ -120,7 +139,7 @@ const ServiceGrid = () => {
 
   const filteredServices = selectedCategory === 'All' 
     ? services 
-    : services.filter(service => service.category === selectedCategory);
+    : services?.filter(service => service.category === selectedCategory);
 
   return (
     <div >
@@ -142,7 +161,7 @@ const ServiceGrid = () => {
             className="flex items-center gap-2 py-4 overflow-x-auto scrollbar-hide mx-4"
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
-            {categories.map((category) => (
+            {categories?.map((category) => (
               <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
@@ -169,9 +188,9 @@ const ServiceGrid = () => {
       </div>
 
       {/* Service Cards Grid */}
-      <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="w-full mx-auto py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {filteredServices.map((service) => (
+          {filteredServices?.map((service) => (
             <div key={service.id} className="bg-white overflow-hidden transition-shadow duration-300 cursor-pointer">
               {/* Card Image with Overlay */}
               <div className="relative h-68 bg-gradient-to-br from-teal-600 to-teal-800 overflow-hidden">
@@ -180,7 +199,7 @@ const ServiceGrid = () => {
                 
                 {/* Category Tag */}
                 <div className="absolute top-4 left-4 z-25">
-                  <span className="bg-white bg-opacity-90 text-black px-3 py-1 rounded-full text-xs font-medium">
+                  <span className="bg-white bg-opacity-90 text-[10px]  text-black px-3 py-1 rounded-full text-xs font-[600]">
                     {service.category.toUpperCase()}
                   </span>
                 </div>
@@ -192,28 +211,28 @@ const ServiceGrid = () => {
               </div>
 
               {/* Card Content */}
-              <div className="py-5">
+              <div className="py-2">
                 {/* Verification and Pro Badge */}
-                <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2">
                     {service.verified && (
-                       <div className="flex items-center gap-1 bg-[#FFE1E1] text-black px-3 py-1 rounded-full text-xs font-medium">
-                         <CheckCircle className="w-3 h-3" />
+                       <div className="flex items-center gap-1 bg-[#FFE1E1] text-black px-3 py-1 rounded-full text-xs font-bold">
+                         <CheckCircle color='black' className="w-3 h-3" />
                          VETTED ENGINEERS
                          </div>
                     )}
                   </div>
                   {service.pro && (
-                     <div className="flex items-center gap-1 bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs font-medium">
-                        <Crown className="w-3 h-3" />
+                     <div className="flex items-center font-bold border-1 gap-1 bg-[transparent] text-[black] px-3 py-1 rounded-full text-xs ">
                         PRO
-                        </div>
+                        <PiSparkleFill color='black' className="w-3 h-3" />
+                      </div>
                   )}
                 </div>
 
                 {/* Service Title */}
-                <h3 className="text-lg font-[400] text-black  text-[20px] leading-tight">
-                  {service.title}
+                <h3 className="text-lg font-[400] text-black  text-[14px] leading-tight">
+                  {service.name}
                 </h3>
               </div>
             </div>

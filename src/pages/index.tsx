@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Navbar from "@/components/navbar";
 import ServiceGrid from "@/components/srevices";
 import Footer from "@/components/footer";
-import React,{useState} from "react";
+import React,{useState,useEffect} from "react";
 import { Search } from "lucide-react";
 
 const geistSans = Geist({
@@ -20,6 +20,7 @@ export default function Home() {
 
   const [searchTerm, setSearchTerm] = useState('');
 
+
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement> | React.MouseEvent<HTMLButtonElement> | React.KeyboardEvent) => {
     e.preventDefault();
     console.log('Searching for:', searchTerm);
@@ -27,7 +28,7 @@ export default function Home() {
   };
 
   return (
-    <div className="max-w-[1400px] mx-auto ">
+    <div className="container mx-auto px-0 lg:px-33">
           <Navbar/>
           <div className="justify-center mt-[10rem] ">
                <div className=" text-black font-bold bg-[#FFE1E1] p-2 px-8 w-[fit-content] mx-auto rounded-4xl">AI is rewriting the rules—Be Part of It!</div>

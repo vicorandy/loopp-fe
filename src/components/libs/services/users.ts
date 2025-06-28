@@ -23,7 +23,7 @@ export async function signUp(data: SignUpData){
 // Login Function
 export async function login(data: LoginData) {
   try {
-    const response = await axios.post(`${API_BASE_URL}/users/login`, data);
+    const response = await axios.post(`${API_BASE_URL}/users/sign-in`, data);
     return response.data;
   } catch (error: any) {
     if (axios.isAxiosError(error) && error.response) {

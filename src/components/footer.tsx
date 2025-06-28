@@ -4,7 +4,7 @@ import { X, Instagram, Linkedin } from 'lucide-react';
 const Footer = () => {
   return (
     <footer className="w-full bg-white border-t border-gray-200 py-6 mt-[3rem]" >
-      <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1500px] mx-auto ">
         <div className="flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0">
           {/* Left side - Logo and Links */}
           <div className="flex flex-col items-center md:items-start space-y-6">
