@@ -1,99 +1,50 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { User, CheckCircle, Crown } from 'lucide-react';
 import Navbar from '@/components/navbar';
 import Footer from '@/components/footer';
 import { DedicatedPMModal } from '@/components/modal/projectManagerModal';
 import { PiSparkleFill } from "react-icons/pi";
 import { PiWarningCircle } from "react-icons/pi";
-
+import Cookies from 'js-cookie';
+import { useGetServices } from '@/components/libs/hooks/services';
+import { ServiceData } from '@/components/libs/types';
+import { useRouter } from 'next/router';
+import { slugify } from '@/components/libs/utils';
 
 const Service = () => {
+  const selectedServiceData = Cookies.get('selected-service')
   const [projectDescription, setProjectDescription] = useState('');
+  const [selectedService,setSlectedService] = useState<ServiceData>()
   const [deadline, setDeadline] = useState('');
   const [budget, setBudget] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
 
-   const services = [
-    {
-      id: 1,
-      title: "Develop AI for Sustainable Supply Chain Optimization",
-      category: "Energy & Sustainability",
-      image: "/191.webp",
-      verified: true,
-      pro: true,
-      overlayElements: ["4+", "40", "Live Data"]
-    },
-    {
-      id: 2,
-      title: "AI-Powered Healthcare Diagnostic System",
-      category: "Healthcare",
-      image: "/191.webp",
-      verified: true,
-      pro: false,
-      overlayElements: ["24/7", "95%", "Real-time"]
-    },
-    {
-      id: 3,
-      title: "Smart Financial Trading Bot",
-      category: "Finance & Fintech",
-      image: "/191.webp",
-      verified: true,
-      pro: true,
-      overlayElements: ["Auto", "24H", "Secure"]
-    },
-    {
-      id: 4,
-      title: "Autonomous Video Content Generator",
-      category: "Video & Image",
-      image: "/191.webp",
-      verified: false,
-      pro: true,
-      overlayElements: ["HD", "Fast", "AI Gen"]
-    },
-    {
-      id: 5,
-      title: "Voice Assistant for Education",
-      category: "Education & EdTech",
-      image: "/191.webp",
-      verified: true,
-      pro: false,
-      overlayElements: ["Voice", "Learn", "24/7"]
-    },
-    {
-      id: 6,
-      title: "Cybersecurity Threat Detection AI",
-      category: "Cybersecurity",
-      image: "/191.webp",
-      verified: true,
-      pro: true,
-      overlayElements: ["Shield", "99%", "Alert"]
-    },
-    {
-      id: 7,
-      title: "Smart Real Estate Valuation Tool",
-      category: "Real Estate",
-      image: "/191.webp",
-      verified: true,
-      pro: false,
-      overlayElements: ["Price", "AI", "Market"]
-    },
-    {
-      id: 8,
-      title: "Gaming AI Companion Bot",
-      category: "Gaming & eSports",
-      image: "/191.webp",
-      verified: false,
-      pro: true,
-      overlayElements: ["Game", "AI", "Win"]
-    }
-  ];
+  const {data,isLoading} = useGetServices({page:1,limit:12})
+  const [services,setService] = useState<ServiceData[]>([])
+  const router = useRouter()
+ 
+   
+     useEffect(()=>{
+        setService(data?.services)
+        if(selectedServiceData) setSlectedService(JSON.parse(selectedServiceData))
+     },[data,selectedServiceData])
 
   const handleSubmit = (e:React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log('Project submitted:', { projectDescription, deadline, budget });
+    router.push('/hire-an-engineer')
     // Add your submission logic here
   };
+  
+  function serviceRouter (service:ServiceData){
+    const link = slugify(service.name)
+    Cookies.set('selected-service',JSON.stringify(service))
+    router.push(`/services/${link}`)
 
+  }
+  
+  
+  
   return (
      <div className="container mx-auto px-0 lg:px-33">
         <Navbar />
@@ -106,11 +57,16 @@ const Service = () => {
                     <div className="relative">
                     <div className="overflow-hidden rounded-2xl">
                         <img
-                        src="/hire.webp"
+                        src={selectedService?.image}
                         alt="Business person with 24/7 graphic"
                         className="w-full  object-cover aspect-[4/4] h-[100%]"
                         />
                     </div>
+                       <div className="absolute top-4 left-4 z-25">
+                            <span className="bg-white bg-opacity-90 text-[10px]  text-black px-3 py-1 rounded-full text-xs font-[600]">
+                                {selectedService?.category.toUpperCase()}
+                            </span>
+                       </div>
                     </div>
 
                     {/* Right: Form */}
@@ -139,10 +95,10 @@ const Service = () => {
                     {/* Heading + Copy: scaled down */}
                     <div>
                         <h1 className="text-center lg:text-left text-2xl sm:text-3xl md:text-3xl lg:text-[28px] font-[600] text-black leading-snug mb-2">
-                        Build AI Agents for Scalable, Intelligent Task Execution
+                         {selectedService?.name}
                         </h1>
                         <p className="text-center lg:text-left text-black text-[14px] font-[400] leading-relaxed">
-                        Develop an AI‑driven autonomous agent—a 24/7 digital teammate that manages workflows, makes decisions, learns from experience, and seamlessly collaborates with both humans and other agents.
+                        {selectedService?.description}
                         </p>
                     </div>
 
@@ -214,51 +170,51 @@ const Service = () => {
                 <div className="w-full mx-auto px-4 sm:px-6 lg:px-1 py-8">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                     {services?.map((service) => (
-                         <div key={service.id} className="bg-white overflow-hidden transition-shadow duration-300 cursor-pointer">
-                                      {/* Card Image with Overlay */}
-                                      <div className="relative h-68 bg-gradient-to-br from-teal-600 to-teal-800 overflow-hidden">
-                                        {/* Background Pattern/Overlay */}
-                                        <div className="absolute inset-0 bg-black bg-opacity-20"></div>
-                                        
-                                        {/* Category Tag */}
-                                        <div className="absolute top-4 left-4 z-25">
-                                          <span className="bg-white bg-opacity-90 text-[10px]  text-black px-3 py-1 rounded-full text-xs font-[600]">
-                                            {service.category.toUpperCase()}
-                                          </span>
-                                        </div>
-                        
-                                        {/* Overlay Elements */}
-                                        <div className="absolute bg-white inset-0 flex items-center justify-center">
-                                            <img className='h-68 rounded-2xl ' src={service?.image} />
-                                        </div>
-                                      </div>
-                        
-                                      {/* Card Content */}
-                                      <div className="py-2">
-                                        {/* Verification and Pro Badge */}
-                                        <div className="flex items-center justify-between mb-2">
-                                          <div className="flex items-center gap-2">
-                                            {service.verified && (
-                                               <div className="flex items-center gap-1 bg-[#FFE1E1] text-black px-3 py-1 rounded-full text-xs font-bold">
-                                                 <CheckCircle color='black' className="w-3 h-3" />
-                                                 VETTED ENGINEERS
-                                                 </div>
-                                            )}
-                                          </div>
-                                          {service.pro && (
-                                             <div className="flex items-center font-bold border-1 gap-1 bg-[transparent] text-[black] px-3 py-1 rounded-full text-xs ">
-                                                PRO
-                                                <PiSparkleFill color='black' className="w-3 h-3" />
-                                              </div>
-                                          )}
-                                        </div>
-                        
-                                        {/* Service Title */}
-                                        <h3 className="text-lg font-[400] text-black  text-[14px] leading-tight">
-                                          {service.title}
-                                        </h3>
-                                      </div>
+                      <div onClick={()=>serviceRouter(service)} key={service.id} className="bg-white overflow-hidden transition-shadow duration-300 cursor-pointer">
+                                  {/* Card Image with Overlay */}
+                                  <div className="relative h-68 bg-gradient-to-br from-teal-600 to-teal-800 overflow-hidden">
+                                    {/* Background Pattern/Overlay */}
+                                    <div className="absolute inset-0 bg-black bg-opacity-20"></div>
+                                    
+                                    {/* Category Tag */}
+                                    <div className="absolute top-4 left-4 z-25">
+                                      <span className="bg-white bg-opacity-90 text-[10px]  text-black px-3 py-1 rounded-full text-xs font-[600]">
+                                        {service.category.toUpperCase()}
+                                      </span>
                                     </div>
+                    
+                                    {/* Overlay Elements */}
+                                    <div className="absolute bg-white inset-0 flex items-center justify-center">
+                                        <img className='w-full h-[265px] object-cover object-center rounded-2xl ' src={service?.image} />
+                                    </div>
+                                  </div>
+                    
+                                  {/* Card Content */}
+                                  <div className="py-2">
+                                    {/* Verification and Pro Badge */}
+                                    <div className="flex items-center justify-between mb-2">
+                                      <div className="flex items-center gap-2">
+                                        {service.verified && (
+                                           <div className="flex items-center gap-1 bg-[#FFE1E1] text-black px-3 py-1 rounded-full text-xs font-bold">
+                                             <CheckCircle color='black' className="w-3 h-3" />
+                                             VETTED ENGINEERS
+                                             </div>
+                                        )}
+                                      </div>
+                                      {service.pro && (
+                                         <div className="flex items-center font-bold border-1 gap-1 bg-[transparent] text-[black] px-3 py-1 rounded-full text-xs ">
+                                            PRO
+                                            <PiSparkleFill color='black' className="w-3 h-3" />
+                                          </div>
+                                      )}
+                                    </div>
+                    
+                                    {/* Service Title */}
+                                    <h3 className="text-lg font-[400] text-black  text-[14px] leading-tight">
+                                      {service.name}
+                                    </h3>
+                                  </div>
+                     </div>
                     ))}
                     </div>
                 </div>

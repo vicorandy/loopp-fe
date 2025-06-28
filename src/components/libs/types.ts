@@ -91,3 +91,13 @@ export const serviceCategories = [
     yearsOfExperience: string;
     password: string;
   }
+
+   export interface ServiceData {
+    id: string;
+    name: string;
+    category: string;
+    image: string;
+    description: string;
+    verified: boolean;
+    pro: boolean;
+  }

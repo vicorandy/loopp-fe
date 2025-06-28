@@ -50,7 +50,7 @@ export async function getUser() {
     } catch (error) {
       throw error as AxiosError;
     }
-  }
+}
 
 //get user
 export async function getUsersByRole(userRole:string) {

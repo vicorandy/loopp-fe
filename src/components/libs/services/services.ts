@@ -50,6 +50,8 @@ export const addService = async (data: AddServicePayload) => {
 
 export const getServices = async ({ page, limit }: GetServicesParams) => {
   try {
+    console.log({page,limit})
+    console.log('runing')
     const response = await axios.get(`${API_BASE_URL}/services/get-services`,{
         params : {page,limit}
     });

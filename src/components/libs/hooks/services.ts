@@ -27,12 +27,12 @@ export const useGetServices = ({ page, limit }: GetServicesParams) => {
   const query = useQuery({
     queryKey: ['services', page, limit],
     queryFn: () => getServices({ page, limit }),
-     
   });
 
   const refetchWithParams = (newParams: GetServicesParams) => {
-    queryClient.invalidateQueries({
+    return queryClient.fetchQuery({
       queryKey: ['services', newParams.page, newParams.limit],
+      queryFn: () => getServices({ page: newParams.page, limit: newParams.limit }),
     });
   };
 

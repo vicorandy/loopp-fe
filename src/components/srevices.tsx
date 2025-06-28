@@ -2,25 +2,33 @@ import React, { useState,useEffect } from 'react';
 import { ChevronLeft, ChevronRight, CheckCircle, Crown ,Sparkle} from 'lucide-react';
 import { PiSparkleFill } from "react-icons/pi";
 import { useGetServices } from './libs/hooks/services';
+import { slugify } from './libs/utils';
+import { useRouter } from 'next/router';
+import Cookies from 'js-cookie';
+import { ServiceData } from './libs/types';
+
 
 const ServiceGrid = () => {
-  const [selectedCategory, setSelectedCategory] = useState('All');
-  interface ServiceData {
-  id: string;
-  name: string;
-  category: string;
-  image: string;
-  description: string;
-  verified: boolean;
-  pro: boolean;
-  // Add any additional fields you didn't include in the snippet (represented by …)
-}
-    const {data,isLoading} = useGetServices({page:1,limit:12})
+    const [page, setPage] = useState(1);
+    const [limit, setLimit] = useState(1);
+    const [selectedCategory, setSelectedCategory] = useState('All');
+    const {data,isLoading,refetchWithParams} = useGetServices({page,limit})
+    const [servicesCount,setServicesCount] = useState(1)
     const [services,setService] = useState<ServiceData[]>([])
+    const router = useRouter()
   
-    useEffect(()=>{
-       setService(data?.services)
-    },[data])
+ useEffect(() => {
+  console.log({data})
+  
+  if (data?.services?.length) {
+    setService((prev) => {
+      const existingIds = new Set(prev.map((service:ServiceData) => service.id));
+      setServicesCount(data?.servicesCount)
+      const newServices = data.services.filter((service:ServiceData) => !existingIds.has(service.id));
+      return [...prev, ...newServices];
+    });
+  }
+}, [data]);
 
 
   const categories = [
@@ -52,80 +60,12 @@ const ServiceGrid = () => {
     'Food & Beverage'
   ];
 
-  const servicess = [
-    {
-      id: 1,
-      title: "Develop AI for Sustainable Supply Chain Optimization",
-      category: "Energy & Sustainability",
-      image: "/191.webp",
-      verified: true,
-      pro: true,
-      overlayElements: ["4+", "40", "Live Data"]
-    },
-    {
-      id: 2,
-      title: "AI-Powered Healthcare Diagnostic System",
-      category: "Healthcare",
-      image: "/191.webp",
-      verified: true,
-      pro: false,
-      overlayElements: ["24/7", "95%", "Real-time"]
-    },
-    {
-      id: 3,
-      title: "Smart Financial Trading Bot",
-      category: "Finance & Fintech",
-      image: "/191.webp",
-      verified: true,
-      pro: true,
-      overlayElements: ["Auto", "24H", "Secure"]
-    },
-    {
-      id: 4,
-      title: "Autonomous Video Content Generator",
-      category: "Video & Image",
-      image: "/191.webp",
-      verified: false,
-      pro: true,
-      overlayElements: ["HD", "Fast", "AI Gen"]
-    },
-    {
-      id: 5,
-      title: "Voice Assistant for Education",
-      category: "Education & EdTech",
-      image: "/191.webp",
-      verified: true,
-      pro: false,
-      overlayElements: ["Voice", "Learn", "24/7"]
-    },
-    {
-      id: 6,
-      title: "Cybersecurity Threat Detection AI",
-      category: "Cybersecurity",
-      image: "/191.webp",
-      verified: true,
-      pro: true,
-      overlayElements: ["Shield", "99%", "Alert"]
-    },
-    {
-      id: 7,
-      title: "Smart Real Estate Valuation Tool",
-      category: "Real Estate",
-      image: "/191.webp",
-      verified: true,
-      pro: false,
-      overlayElements: ["Price", "AI", "Market"]
-    },
-    {
-      id: 8,
-      title: "Gaming AI Companion Bot",
-      category: "Gaming & eSports",
-      image: "/191.webp",
-      verified: false,
-      pro: true,
-      overlayElements: ["Game", "AI", "Win"]
-    }
-  ];
+  function serviceRouter (service:ServiceData){
+    const link = slugify(service.name)
+    Cookies.set('selected-service',JSON.stringify(service))
+    router.push(`/services/${link}`)
+
+  }
 
   const scrollLeft = () => {
     const container = document.getElementById('categories-container');
@@ -136,6 +76,15 @@ const ServiceGrid = () => {
     const container = document.getElementById('categories-container');
     container?.scrollBy({ left: 200, behavior: 'smooth' });
   };
+
+  const fetchMoreSerice = async()=>{
+    console.log(servicesCount)
+    if(servicesCount <= page * limit ) return
+    setPage(page + 1) 
+    await refetchWithParams({page,limit})
+    
+    
+  }
 
   const filteredServices = selectedCategory === 'All' 
     ? services 
@@ -191,7 +140,7 @@ const ServiceGrid = () => {
       <div className="w-full mx-auto py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filteredServices?.map((service) => (
-            <div key={service.id} className="bg-white overflow-hidden transition-shadow duration-300 cursor-pointer">
+            <div onClick={()=>serviceRouter(service)} key={service.id} className="bg-white overflow-hidden transition-shadow duration-300 cursor-pointer">
               {/* Card Image with Overlay */}
               <div className="relative h-68 bg-gradient-to-br from-teal-600 to-teal-800 overflow-hidden">
                 {/* Background Pattern/Overlay */}
@@ -249,6 +198,14 @@ const ServiceGrid = () => {
             >
               Show All Services
             </button>
+          </div>
+        )}
+
+        {filteredServices?.length >= 1 && (
+          <div className='mx-auto w-[fit-content] mt-30'>
+              <button onClick={fetchMoreSerice} className="block text-center bg-black text-white hover:bg-gray-800 px-4 py-2 rounded-full text-sm font-medium">
+                    {isLoading ? 'Loading...' : 'Load More'}
+              </button>
           </div>
         )}
       </div>
