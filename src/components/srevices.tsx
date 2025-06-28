@@ -139,7 +139,7 @@ const ServiceGrid = () => {
 
   const filteredServices = selectedCategory === 'All' 
     ? services 
-    : services?.filter(service => service.category === selectedCategory);
+    : services?.filter(service => service?.category === selectedCategory);
 
   return (
     <div >
@@ -240,7 +240,7 @@ const ServiceGrid = () => {
         </div>
 
         {/* No Results Message */}
-        {filteredServices.length === 0 && (
+        {filteredServices?.length === 0 && (
           <div className="text-center py-12">
             <p className="text-gray-500 text-lg">No services found for "{selectedCategory}" category.</p>
             <button 
