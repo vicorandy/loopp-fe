@@ -206,7 +206,7 @@ const ServiceGrid = () => {
 
                 {/* Overlay Elements */}
                 <div className="absolute bg-white inset-0 flex items-center justify-center">
-                    <img className='h-68 rounded-2xl ' src={service?.image} />
+                    <img className='w-full h-[265px] object-cover object-center rounded-2xl ' src={service?.image} />
                 </div>
               </div>
 
