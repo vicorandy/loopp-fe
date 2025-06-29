@@ -213,7 +213,7 @@ const AuthPage: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto px-0 lg:px-10 xl:px-33">
+    <div className="container mx-auto px-3 lg:px-10 xl:px-33">
       <Navbar />
       <div className="justify-center mt-[10rem]">
         <div className="text-black font-bold bg-[#FFE1E1] p-2 px-8 w-[fit-content] mx-auto rounded-4xl">

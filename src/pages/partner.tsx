@@ -96,7 +96,7 @@ const GetHiredForm: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto lg:px-10 xl:px-33">
+    <div className="container mx-auto px-3 lg:px-10 xl:px-33">
       <Navbar />
 
       {/* Header */}

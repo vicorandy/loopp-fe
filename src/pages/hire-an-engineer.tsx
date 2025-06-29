@@ -100,7 +100,7 @@ const AuthForm: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto px-0 lg:px-10 xl:px-33">
+    <div className="container mx-auto px-3 lg:px-10 xl:px-33">
       <Navbar />
 
       {/* Header */}

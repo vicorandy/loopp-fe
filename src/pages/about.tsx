@@ -7,7 +7,7 @@ import Footer from '@/components/footer';
 
 const AboutPage: React.FC = () => {
   return (
-    <div className="container mx-auto px-0 lg:px-10 xl:px-33">
+    <div className="container mx-auto px-3 lg:px-10 xl:px-33">
 
      <Navbar />
         <div className="min-h-screen bg-white">

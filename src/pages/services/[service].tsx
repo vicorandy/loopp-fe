@@ -46,7 +46,7 @@ const Service = () => {
   
   
   return (
-     <div className="container mx-auto px-0 lg:px-10 xl:px-33">
+     <div className="container mx-auto px-3 lg:px-10 xl:px-33">
         <Navbar />
         <DedicatedPMModal open={modalOpen} onClose={()=>{setModalOpen(false)}} />
 
@@ -72,7 +72,7 @@ const Service = () => {
                     {/* Right: Form */}
                     <div className="space-y-6">
                     {/* Badges: no wrap, smaller */}
-                    <div className="flex items-center justify-between gap-3 whitespace-nowrap">
+                    <div className="flex  flex-col md:flex-row items-center justify-between gap-3 whitespace-nowrap">
                         <div className='flex gap-2 items-center'> 
                             <div className="flex items-center gap-1 bg-black text-white px-3 py-1 rounded-full text-xs font-medium">
                             <User className="w-3 h-3" />
