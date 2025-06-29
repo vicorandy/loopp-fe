@@ -96,12 +96,12 @@ const GetHiredForm: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto px-0 lg:px-33">
+    <div className="container mx-auto lg:px-10 xl:px-33">
       <Navbar />
 
       {/* Header */}
       <div className="text-center mt-[10rem]">
-        <div className="inline-block bg-pink-300 text-black font-bold px-8 py-2 rounded-full">
+        <div className="inline-block bg-[#FFE1E1] text-black font-bold px-8 py-2 rounded-full">
           Join Us
         </div>
         <h1 className="mt-4 text-[4rem] font-bold text-gray-900">Become a Partner</h1>

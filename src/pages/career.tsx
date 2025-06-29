@@ -104,7 +104,7 @@ const LooppLandingPage: React.FC = () => {
       <section className="text-center py-20 px-6 mt-[7rem]">
         
 
-      <div className=" text-black font-bold bg-[pink] p-2 my-4 px-8 w-[fit-content] mx-auto rounded-4xl">
+      <div className=" text-black font-bold bg-[#FFE1E1] p-2 my-4 px-8 w-[fit-content] mx-auto rounded-4xl">
           Career
       </div>
 

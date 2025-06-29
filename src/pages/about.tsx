@@ -7,7 +7,7 @@ import Footer from '@/components/footer';
 
 const AboutPage: React.FC = () => {
   return (
-    <div className="container mx-auto px-0 lg:px-33">
+    <div className="container mx-auto px-0 lg:px-10 xl:px-33">
 
      <Navbar />
         <div className="min-h-screen bg-white">
@@ -16,7 +16,7 @@ const AboutPage: React.FC = () => {
             <section className="relative pt-24 pb-16 md:px-10">
             <div className="max-w-7xl mx-auto px-6">
                 <div className="text-center mb-16">
-                <div className=" text-black font-bold bg-[pink] my-5 p-2 px-8 w-[fit-content] mx-auto rounded-4xl">About</div>
+                <div className=" text-black font-bold bg-[#FFE1E1] my-5 p-2 px-8 w-[fit-content] mx-auto rounded-4xl">About</div>
                 <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-black mb-6">
                     The AI Revolution Starts Here
                 </h1>

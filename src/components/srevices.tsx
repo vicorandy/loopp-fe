@@ -10,7 +10,7 @@ import { ServiceData } from './libs/types';
 
 const ServiceGrid = () => {
     const [page, setPage] = useState(1);
-    const [limit, setLimit] = useState(1);
+    const [limit, setLimit] = useState(12);
     const [selectedCategory, setSelectedCategory] = useState('All');
     const {data,isLoading,refetchWithParams} = useGetServices({page,limit})
     const [servicesCount,setServicesCount] = useState(1)

@@ -46,7 +46,7 @@ const Service = () => {
   
   
   return (
-     <div className="container mx-auto px-0 lg:px-33">
+     <div className="container mx-auto px-0 lg:px-10 xl:px-33">
         <Navbar />
         <DedicatedPMModal open={modalOpen} onClose={()=>{setModalOpen(false)}} />
 
