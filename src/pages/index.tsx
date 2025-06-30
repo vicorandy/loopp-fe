@@ -39,7 +39,7 @@ export default function Home() {
         </h1>
 
       <div className="w-full max-w-2xl mx-auto  px-5 py-5">
-      <div className="flex items-center gap-3">
+      {/* <div className="flex items-center gap-3">
         <input
           type="text"
           value={searchTerm}
@@ -56,7 +56,7 @@ export default function Home() {
         >
           <Search className="w-4 h-4" />
         </button>
-      </div>
+      </div> */}
       <SearchBox />
     </div>
           </div>
