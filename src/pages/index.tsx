@@ -5,6 +5,7 @@ import ServiceGrid from "@/components/srevices";
 import Footer from "@/components/footer";
 import React,{useState,useEffect} from "react";
 import { Search } from "lucide-react";
+import SearchBox from "@/components/searchBox";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -56,6 +57,7 @@ export default function Home() {
           <Search className="w-4 h-4" />
         </button>
       </div>
+      <SearchBox />
     </div>
           </div>
           <div id="services" >

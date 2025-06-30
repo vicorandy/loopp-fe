@@ -1,11 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronDown, Search, Menu, X } from 'lucide-react';
-
+import UserAvatarDropdown from './dashboard/project-owner/userAvatarDropdown';
+import { useGetUser } from './libs/hooks/users';
+import { User } from './libs/types';
 const Navbar = () => {
   const [isTopServicesOpen, setIsTopServicesOpen] = useState(false);
   const [isExploreOpen, setIsExploreOpen] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const {data} = useGetUser()
+  const [user,setUser] = useState<User>()
+
+  useEffect(()=>{
+     if(data?.user?.userRole === 'project-owner') setUser(data?.user)
+      console.log({data})
+  },[data])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -130,9 +139,16 @@ const Navbar = () => {
               </a>
             </div>
           </div>
-
+           
+           {/* User Avatar Dropdown */}
+          { user &&     
+           (<div>
+              <UserAvatarDropdown userName='Ehimigbai Victor' userInitials='VE' />
+           </div>)
+          }
           {/* Right side buttons */}
-          <div className="hidden md:block">
+          {!user &&   
+          (<div className="hidden md:block">
             <div className="ml-4 flex items-center space-x-3">
               <a
                 href="/get-hired"
@@ -147,7 +163,8 @@ const Navbar = () => {
                 Hire AI Engineer
               </a>
             </div>
-          </div>
+          </div>)
+          }
 
           {/* Mobile menu button */}
           <div className="md:hidden">

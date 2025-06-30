@@ -5,7 +5,7 @@ import Navbar from '@/components/navbar';
 import Footer from '@/components/footer';
 import { useSignUp,useLogin } from '@/components/libs/hooks/users';
 import { toast } from 'react-toastify';
-import { SignUpData,LoginData } from '@/components/libs/types';
+import { useRouter } from 'next/router';
 
 interface FormData {
   firstName: string;
@@ -36,8 +36,9 @@ const AuthForm: React.FC = () => {
   });
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const signUpMutation = useSignUp()
-  const loginMutation = useLogin()
+  const signUpMutation = useSignUp();
+  const loginMutation = useLogin();
+  const router = useRouter();
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
@@ -81,9 +82,11 @@ const AuthForm: React.FC = () => {
       formData.userRole ="project-owner"
       const data = await signUpMutation.mutateAsync(formData)
       toast.success(data.message)
+      router.push('/')
      }else{
        const data = await loginMutation.mutateAsync(formData)
        toast.success(data.message)
+       router.push('/')
      }
      
     } catch(error:any) {

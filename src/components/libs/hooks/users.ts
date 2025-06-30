@@ -16,7 +16,6 @@ export const useSignUp = () => {
         Cookies.set('authToken', data.token, { expires: 30 }); // Expires in  30days
       }
       if(data.user.userRole === 'project-manager') router.push('/dashboard/project-manager')
-      if(data.user.userRole === 'project-owner') router.push('/dashboard/project-owner')
       if(data.user.userRole === 'project-engineer') router.push('/dashboard/project-engineer')
     },
     onError: (error) => {
@@ -26,7 +25,6 @@ export const useSignUp = () => {
 };
 
 export const useLogin = () => {
-  const queryClient = useQueryClient();
   const router = useRouter();
 
   return useMutation({
@@ -36,7 +34,6 @@ export const useLogin = () => {
             Cookies.set('authToken', data.token, { expires: 30 }); // Expires in  30days
           }
           if(data.user.userRole === 'project-manager') router.push('/dashboard/project-manager')
-          if(data.user.userRole === 'project-owner') router.push('/dashboard/project-owner')
           if(data.user.userRole === 'project-engineer') router.push('/dashboard/project-engineer')
     }
   });
