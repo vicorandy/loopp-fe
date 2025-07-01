@@ -23,7 +23,6 @@ export const editService = async ({ data, id }: { data: AddServicePayload; id: s
 };
 
 export const deleteService = async (id:string) => {
-  console.log(token)
   const response = await axios.delete(`${API_BASE_URL}/services/delete-service/${id}`, {
     headers: {
       Authorization : `Bearer ${token}`
@@ -35,9 +34,6 @@ export const deleteService = async (id:string) => {
 
 export const addService = async (data: AddServicePayload) => {
   const formData =  data
-  console.log({data})
-  
-
   const response = await axios.post(`${API_BASE_URL}/services/add-service`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
@@ -50,10 +46,21 @@ export const addService = async (data: AddServicePayload) => {
 
 export const getServices = async ({ page, limit }: GetServicesParams) => {
   try {
-    console.log({page,limit})
-    console.log('runing')
     const response = await axios.get(`${API_BASE_URL}/services/get-services`,{
         params : {page,limit}
+    });
+    return response.data;
+  } catch (error: any) {
+    if (axios.isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.message || 'Login failed.');
+    }
+    throw new Error('An unexpected error occurred during login.');
+  }
+}
+export const searchServices = async (searchTerm: string) => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/services/search-service`,{
+        params : {searchTerm}
     });
     return response.data;
   } catch (error: any) {

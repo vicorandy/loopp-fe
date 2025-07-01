@@ -10,8 +10,6 @@ export const useSignUp = () => {
   return useMutation({
     mutationFn: signUp,
     onSuccess: (data) => {
-      console.log('Sign up successful:', data);
-
       if (data.token) {
         Cookies.set('authToken', data.token, { expires: 30 }); // Expires in  30days
       }

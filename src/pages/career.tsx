@@ -77,7 +77,6 @@ const LooppLandingPage: React.FC = () => {
     try {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
-      console.log('Form submitted:', formData);
       alert('Form submitted successfully!');
       
       // Reset form

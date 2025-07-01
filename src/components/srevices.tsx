@@ -17,9 +17,7 @@ const ServiceGrid = () => {
     const [services,setService] = useState<ServiceData[]>([])
     const router = useRouter()
   
- useEffect(() => {
-  console.log({data})
-  
+ useEffect(() => {  
   if (data?.services?.length) {
     setService((prev) => {
       const existingIds = new Set(prev.map((service:ServiceData) => service.id));
@@ -78,7 +76,6 @@ const ServiceGrid = () => {
   };
 
   const fetchMoreSerice = async()=>{
-    console.log(servicesCount)
     if(servicesCount <= page * limit ) return
     setPage(page + 1) 
     await refetchWithParams({page,limit})

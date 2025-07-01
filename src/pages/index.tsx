@@ -24,7 +24,6 @@ export default function Home() {
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement> | React.MouseEvent<HTMLButtonElement> | React.KeyboardEvent) => {
     e.preventDefault();
-    console.log('Searching for:', searchTerm);
     // Add your search logic here
   };
 
@@ -32,7 +31,7 @@ export default function Home() {
     <div className="container mx-auto px-3  lg:px-10  xl:px-33">
           <Navbar/>
           <div className="justify-center mt-[10rem] ">
-               <div className=" text-black font-bold bg-[#FFE1E1] p-2 px-8 w-[fit-content] mx-auto rounded-4xl">AI is rewriting the rules—Be Part of It!</div>
+          <div className=" text-black font-bold bg-[#FFE1E1] p-2 px-8 w-[fit-content] mx-auto rounded-4xl">AI is rewriting the rules—Be Part of It!</div>
           <h1 className="text-center text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-[60px] font-[500]  text-[black]  py-5 pb-4  ">
           Find the Perfect AI Engineer <br />
           For Your Next Project

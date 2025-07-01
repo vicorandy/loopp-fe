@@ -31,7 +31,6 @@ const SignUpForm: React.FC = () => {
         formData.userRole = 'project-manager'
         const data:any = await signUpMutation.mutateAsync(formData);
         toast.success(data.message)
-        console.log(data)
     } catch (error:any) {
         toast.error(error?.message)
     }

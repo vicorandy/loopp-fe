@@ -3,6 +3,8 @@ import { ChevronDown, Search, Menu, X } from 'lucide-react';
 import UserAvatarDropdown from './dashboard/project-owner/userAvatarDropdown';
 import { useGetUser } from './libs/hooks/users';
 import { User } from './libs/types';
+import { useRouter } from 'next/router';
+
 const Navbar = () => {
   const [isTopServicesOpen, setIsTopServicesOpen] = useState(false);
   const [isExploreOpen, setIsExploreOpen] = useState(false);
@@ -10,17 +12,18 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const {data} = useGetUser()
   const [user,setUser] = useState<User>()
+  const router = useRouter()
+  const [serchTerm,setSearchTerm] = useState<string>()
 
   useEffect(()=>{
      if(data?.user?.userRole === 'project-owner') setUser(data?.user)
-      console.log({data})
   },[data])
 
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
       // Show search bar when scrolled down 100px or more
-      setShowSearch(scrollY > 100);
+      setShowSearch(scrollY > 350);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -50,11 +53,12 @@ const Navbar = () => {
             } overflow-hidden`}>
               <div className="relative">
                 <input
+                  onChange={(e)=>setSearchTerm(e.target.value)}
                   type="text"
                   placeholder="Search..."
                   className="w-full pl-4 pr-10 py-2 bg-gray-50 border border-gray-200 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-[transparent] focus:border-transparent"
                 />
-                <button className="absolute right-2 top-1/2 transform -translate-y-1/2 p-1.5 bg-black text-white rounded-full hover:bg-gray-800 transition-colors">
+                <button onClick={()=>router.push(`/services/search/${serchTerm}`)} className="absolute right-2 top-1/2 transform -translate-y-1/2 p-1.5 bg-black text-white rounded-full hover:bg-gray-800 transition-colors">
                   <Search className="w-4 h-4" />
                 </button>
               </div>

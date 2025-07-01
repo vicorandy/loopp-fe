@@ -1,5 +1,5 @@
 import { useMutation, useQuery,useQueryClient } from '@tanstack/react-query';
-import { getServices,addService,editService,deleteService } from '../services/services';
+import { getServices,addService,editService,deleteService,searchServices } from '../services/services';
 import { GetServicesParams,AddServicePayload,EditServicePayload } from '../types';
 
 export const useAddService = () => {
@@ -20,6 +20,13 @@ export const useDeleteService = () => {
     mutationFn: (id: string ) => deleteService( id ),
   });
 };
+
+export const useSearchService = (searchTerm:string ) => {
+  return useQuery({
+    queryKey: ['search-service',searchTerm],
+    queryFn: () => searchServices(searchTerm)
+  })
+}
 
 export const useGetServices = ({ page, limit }: GetServicesParams) => {
   const queryClient = useQueryClient();

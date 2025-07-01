@@ -11,7 +11,6 @@ const LoginForm: React.FC = () => {
   });
   const {data,isLoading} = useGetUser()
   useEffect(()=>{
-    console.log(data)
   },[data])
   const loginMutation = useLogin();
 

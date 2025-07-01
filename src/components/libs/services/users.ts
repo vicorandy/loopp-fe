@@ -12,7 +12,6 @@ export async function signUp(data: SignUpData){
     const response = await axios.post(`${API_BASE_URL}/users/sign-up`, data);
     return response.data;
   } catch (error: any) {
-    console.log({error})
     if (axios.isAxiosError(error) && error.response) {
       throw new Error(error.response.data.message || 'Sign up failed.');
     }
@@ -37,15 +36,12 @@ export async function login(data: LoginData) {
 export async function getUser() {
     try {
       const accessToken = getUsersToken();
-      console.log('running')
-      console.log({accessToken})
       if (!accessToken) return;
       const response = await axios.get(`${API_BASE_URL}/users/get-user-info`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
       });
-      console.log({response})
       return response.data;
     } catch (error) {
       throw error as AxiosError;

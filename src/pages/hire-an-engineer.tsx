@@ -82,11 +82,11 @@ const AuthForm: React.FC = () => {
       formData.userRole ="project-owner"
       const data = await signUpMutation.mutateAsync(formData)
       toast.success(data.message)
-      router.push('/')
+      router.push('/chat/message')
      }else{
        const data = await loginMutation.mutateAsync(formData)
        toast.success(data.message)
-       router.push('/')
+       router.push('/chat/message')
      }
      
     } catch(error:any) {

@@ -119,14 +119,12 @@ const PostNewProject = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validateForm()) {
-      console.log('Form submitted:', formData);
       // Handle form submission here
       alert('Project posted successfully!');
     }
   };
 
   const handleSaveDraft = () => {
-    console.log('Draft saved:', formData);
     alert('Draft saved successfully!');
   };
 

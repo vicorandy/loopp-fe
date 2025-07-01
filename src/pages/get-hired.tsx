@@ -176,7 +176,6 @@ const AuthPage: React.FC = () => {
     try {
       // Simulate API call for sign in
       await new Promise(resolve => setTimeout(resolve, 1000));
-      console.log('Sign in submitted:', signInData);
       alert('Signed in successfully!');
       
       // Reset form

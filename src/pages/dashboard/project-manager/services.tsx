@@ -34,7 +34,6 @@ const ServicesPage = () => {
 // setting services
 useEffect(()=>{
   setServices(data?.services)
-  console.log(data)
 },[data])
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {

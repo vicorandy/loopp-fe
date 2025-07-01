@@ -31,7 +31,6 @@ const Service = () => {
 
   const handleSubmit = (e:React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('Project submitted:', { projectDescription, deadline, budget });
     router.push('/hire-an-engineer')
     // Add your submission logic here
   };
